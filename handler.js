@@ -10,14 +10,14 @@ module.exports = function(logger) {
     }
 
     UrlHandler.prototype.work = function(payload, callback) {
-        console.log(payload);
+       // console.log(payload);
 	alchemy.keywords(payload, {}, function(err, response) {
             if (err) throw err;
 
             // See http://www.alchemyapi.com/api/keyword/htmlc.html for format of returned object
             var keywords = response.keywords;
-            console.log(response);
-            req.post({'url':payload, 'callback':'http://184.106.69.90:4000/al'}, function(response){
+           // console.log(response);
+           var resp =  req.post({'url':payload, 'callback':'http://requestb.in/1hxkzel1'}, function(response){
 	    	 
 
   if (response.success) {
@@ -26,7 +26,7 @@ module.exports = function(logger) {
   else {
     console.log(response.errorMessage);
   }
-            });
+            }); console.log(resp);
             callback("success");
 	});
     }
