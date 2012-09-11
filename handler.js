@@ -30,6 +30,7 @@ module.exports = function(logger) {
                 });
 
                 var site = mongoose.model('site', siteSchema);
+                var s = new site({url: payload, keywords: keywords});
             });
 
             console.log(keywords);
