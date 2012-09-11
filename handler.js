@@ -3,6 +3,8 @@ var alchemy = new AlchemyAPI('0d3c6fae79e958c4b14969ab92f7d4de04d91efb');
 var al = require('al-papi');
 al.AlConfig('gswpcceJLA8PPQfntwDo');
 var req = new al.AlWebInsight();
+var mongoose = require("mongoose"), db = mongoose.createConnection('mongodb://wies:wies@alex.mongohq.com:10048/wies');
+
 
 module.exports = function(logger) {
     function UrlHandler() {
@@ -16,8 +18,21 @@ module.exports = function(logger) {
 
             // See http://www.alchemyapi.com/api/keyword/htmlc.html for format of returned object
             var keywords = response.keywords;
-           // console.log(response);
-           var resp =  req.post({'url':payload, 'callback':'http://requestb.in/1hxkzel1'}, function(response){
+
+            var siteSchema = new Schema({
+                url: String,
+                title: String,
+                description: String,
+                keywords: [{
+                    keyword: String,
+                    relevance: Number
+                }]
+            });
+
+            var site = mongoose.model('site', siteSchema);
+            console.log(keywords);
+
+            var resp =  req.post({'url':payload, 'callback':'http://requestb.in/1hxkzel1'}, function(response){
 	    	 
 
   if (response.success) {
