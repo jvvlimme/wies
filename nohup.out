@@ -2,3 +2,97 @@
 11 Sep 17:49:02 - [32minfo[39m: example: watching tube url
 11 Sep 17:49:02 - [32minfo[39m: example: ignoring tube default
 11 Sep 17:49:02 - [32minfo[39m: example: worker started
+11 Sep 20:13:38 - [32minfo[39m: example: connected to beanstalkd at 0.0.0.0:11300
+11 Sep 20:13:38 - [32minfo[39m: example: watching tube url
+11 Sep 20:13:38 - [32minfo[39m: example: ignoring tube default
+11 Sep 20:13:38 - [32minfo[39m: example: worker started
+11 Sep 20:13:40 - [32minfo[39m: example: stopping...
+11 Sep 20:13:40 - [32minfo[39m: example: stopping...
+11 Sep 20:13:42 - [32minfo[39m: example: stopped.
+11 Sep 20:13:59 - [32minfo[39m: example: connected to beanstalkd at 0.0.0.0:11300
+11 Sep 20:13:59 - [32minfo[39m: example: watching tube url
+11 Sep 20:13:59 - [32minfo[39m: example: ignoring tube default
+11 Sep 20:13:59 - [32minfo[39m: example: worker started
+11 Sep 20:14:31 - [32minfo[39m: example: ran job 38 in 1536 ms: "http://www.the-lingerie-post.com"
+{ [MongoError: E11000 duplicate key error index: wies.sites.$url_1  dup key: { : "http://www.the-lingerie-post.com" }]
+  name: 'MongoError',
+  err: 'E11000 duplicate key error index: wies.sites.$url_1  dup key: { : "http://www.the-lingerie-post.com" }',
+  code: 11000,
+  n: 0,
+  connectionId: 29771,
+  ok: 1 }
+connection in did receive response
+_requestDidReceiveResponse
+_requestDidEnd
+11 Sep 20:15:40 - [32minfo[39m: example: connected to beanstalkd at 0.0.0.0:11300
+11 Sep 20:15:40 - [32minfo[39m: example: watching tube url
+11 Sep 20:15:40 - [32minfo[39m: example: ignoring tube default
+11 Sep 20:15:40 - [32minfo[39m: example: worker started
+11 Sep 20:16:13 - [32minfo[39m: example: ran job 39 in 473 ms: "http://www.seomoz.org"
+connection in did receive response
+_requestDidReceiveResponse
+_requestDidEnd
+11 Sep 20:18:28 - [32minfo[39m: example: ran job 40 in 4111 ms: "http://www.seojournal.com"
+connection in did receive response
+_requestDidReceiveResponse
+_requestDidEnd
+11 Sep 20:19:49 - [32minfo[39m: example: ran job 41 in 4295 ms: "http://www.seojournal.com"
+{ [MongoError: E11000 duplicate key error index: wies.sites.$url_1  dup key: { : "http://www.seojournal.com" }]
+  name: 'MongoError',
+  err: 'E11000 duplicate key error index: wies.sites.$url_1  dup key: { : "http://www.seojournal.com" }',
+  code: 11000,
+  n: 0,
+  connectionId: 29772,
+  ok: 1 }
+connection in did receive response
+_requestDidReceiveResponse
+_requestDidEnd
+11 Sep 20:20:35 - [32minfo[39m: example: ran job 42 in 803 ms: "http://www.amazon.com"
+connection in did receive response
+_requestDidReceiveResponse
+_requestDidEnd
+11 Sep 20:23:04 - [32minfo[39m: example: ran job 43 in 640 ms: "http://www.amazon.com"
+{ [MongoError: E11000 duplicate key error index: wies.sites.$url_1  dup key: { : "http://www.amazon.com" }]
+  name: 'MongoError',
+  err: 'E11000 duplicate key error index: wies.sites.$url_1  dup key: { : "http://www.amazon.com" }',
+  code: 11000,
+  n: 0,
+  connectionId: 29783,
+  ok: 1 }
+connection in did receive response
+_requestDidReceiveResponse
+_requestDidEnd
+11 Sep 20:23:54 - [32minfo[39m: example: connected to beanstalkd at 0.0.0.0:11300
+11 Sep 20:23:54 - [32minfo[39m: example: watching tube url
+
+11 Sep 20:23:54 - [32minfo[39m: example: connected to beanstalkd at 0.0.0.0:11300
+11 Sep 20:23:54 - [32minfo[39m: example: watching tube url
+
+node.js:201
+        throw e; // process.nextTick error, or 'error' event on first tick
+              ^
+node.js:201
+        throw e; // process.nextTick error, or 'error' event on first tick
+              ^
+Error: This socket is closed.
+    at Socket._write (net.js:453:28)
+    at Socket.write (net.js:446:15)
+    at [object Object].send (/home/wies/wies/node_modules/fivebeans/lib/client.js:108:14)
+    at [object Object].watch (/home/wies/wies/node_modules/fivebeans/lib/client.js:250:13)
+    at [object Object].watch (/home/wies/wies/node_modules/fivebeans/lib/worker.js:101:15)
+    at /home/wies/wies/node_modules/fivebeans/lib/worker.js:78:9
+    at Socket.<anonymous> (/home/wies/wies/node_modules/fivebeans/lib/client.js:70:3)
+    at Socket.emit (events.js:67:17)
+    at Array.0 (net.js:320:10)
+    at EventEmitter._tickCallback (node.js:192:41)
+Error: This socket is closed.
+    at Socket._write (net.js:453:28)
+    at Socket.write (net.js:446:15)
+    at [object Object].send (/home/wies/wies/node_modules/fivebeans/lib/client.js:108:14)
+    at [object Object].watch (/home/wies/wies/node_modules/fivebeans/lib/client.js:250:13)
+    at [object Object].watch (/home/wies/wies/node_modules/fivebeans/lib/worker.js:101:15)
+    at /home/wies/wies/node_modules/fivebeans/lib/worker.js:78:9
+    at Socket.<anonymous> (/home/wies/wies/node_modules/fivebeans/lib/client.js:70:3)
+    at Socket.emit (events.js:67:17)
+    at Array.0 (net.js:320:10)
+    at EventEmitter._tickCallback (node.js:192:41)

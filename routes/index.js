@@ -6,13 +6,25 @@
 var job
     , jobs=[]
     , delay=0;
+    var al = require('al-papi');
+    al.AlConfig('gswpcceJLA8PPQfntwDo');
+    var ar = new al.AlWebInsight()
+    , mongoose = require("mongoose"), db = mongoose.createConnection('mongodb://wies:wies@alex.mongohq.com:10048/wies')
+    , Schema = mongoose.Schema
+    , ObjectId = Schema.ObjectID;
 
 exports.index = function(req, res){
     res.render('index', { title: 'Website Analyzer' });
 };
 
-exports.al= function(req, res) {
-	console.log(req.param["payload"]);
+exports.al = function(req, res) {
+    console.log("ok");
+	console.log(req.param['url']);
+    ar.get({'url': req.param["url"], 'date_created': req.param["date_created"], "time_created": req.param["time_created"]}, function(response) {
+        console.log(response.title);
+        console.log(response.description);
+    });
+
 }
 
 exports.start = function(req, res) {
@@ -50,5 +62,6 @@ exports.start = function(req, res) {
     });
     res.send("Processing Sites");
 }
+
 
 
