@@ -18,18 +18,20 @@ module.exports = function(logger) {
 
             // See http://www.alchemyapi.com/api/keyword/htmlc.html for format of returned object
             var keywords = response.keywords;
+            db.once('open', function () {
+                var siteSchema = new Schema({
+                    url: String,
+                    title: String,
+                    description: String,
+                    keywords: [{
+                        keyword: String,
+                        relevance: Number
+                    }]
+                });
 
-            var siteSchema = new Schema({
-                url: String,
-                title: String,
-                description: String,
-                keywords: [{
-                    keyword: String,
-                    relevance: Number
-                }]
+                var site = mongoose.model('site', siteSchema);
             });
 
-            var site = mongoose.model('site', siteSchema);
             console.log(keywords);
 
             var resp =  req.post({'url':payload, 'callback':'http://requestb.in/1hxkzel1'}, function(response){
