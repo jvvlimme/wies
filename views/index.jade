@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    .container
+        .span12
+            h1 Website Analyzer
+            form.form-vertical(action='/', method='post')
+              div
+                label(for='websitelist')
+                  | Lijst van te analyzeren websites
+                  .sitelist
+                    textarea#websitelist.span6(name="sitelist", placeholder='http://Google.com', rows='10')
+              div
+                button.btn.btn-primary(type='submit') Verzenden

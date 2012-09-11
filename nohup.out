@@ -1,0 +1,24 @@
+11 Sep 11:15:50 - [32minfo[39m: example: connected to beanstalkd at 0.0.0.0:11300
+11 Sep 11:15:50 - [32minfo[39m: example: watching tube url
+11 Sep 11:15:50 - [32minfo[39m: example: ignoring tube default
+11 Sep 11:15:50 - [32minfo[39m: example: worker started
+11 Sep 11:16:04 - [32minfo[39m: example: stopping...
+11 Sep 11:16:05 - [32minfo[39m: example: stopping...
+11 Sep 11:16:06 - [32minfo[39m: example: stopped.
+11 Sep 11:16:27 - [32minfo[39m: example: connected to beanstalkd at 0.0.0.0:11300
+11 Sep 11:16:27 - [32minfo[39m: example: watching tube url
+11 Sep 11:16:27 - [32minfo[39m: example: ignoring tube default
+11 Sep 11:16:27 - [32minfo[39m: example: worker started
+11 Sep 11:19:59 - [31merror[39m: example: job id 11 has type undefined; deleting
+11 Sep 11:21:29 - [31merror[39m: example: job id 13 has type undefined; deleting
+
+/home/wies/node_modules/fivebeans/lib/worker.js:171
+	var handler = this.lookupHandler(job.type);
+                                     ^
+TypeError: Cannot read property 'type' of undefined
+    at [object Object].runJob (/home/wies/node_modules/fivebeans/lib/worker.js:171:38)
+    at /home/wies/node_modules/fivebeans/lib/worker.js:161:10
+    at [object Object].tryHandlingResponse (/home/wies/node_modules/fivebeans/lib/client.js:96:19)
+    at Socket.<anonymous> (/home/wies/node_modules/fivebeans/lib/client.js:58:15)
+    at Socket.emit (events.js:67:17)
+    at TCP.onread (net.js:347:14)

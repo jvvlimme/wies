@@ -1,0 +1,8 @@
+beanstalkd:
+    host: "0.0.0.0"
+    port: 11300
+watch:
+    - 'url'
+handlers:
+    - "handler.js"
+ignoreDefault: true
