@@ -1,4 +1,3 @@
-
 /*
  * GET home page.
  */
@@ -6,11 +5,14 @@
 var job
     , jobs=[]
     , delay=0;
-    var al = require('al-papi');
-    al.AlConfig('gswpcceJLA8PPQfntwDo');
-    var ar = new al.AlWebInsight()
-    , mongoose = require("mongoose"), db = mongoose.createConnection('mongodb://wies:wies@alex.mongohq.com:10048/wies')
-    , Schema = mongoose.Schema
+
+var al = require('al-papi');
+al.AlConfig('gswpcceJLA8PPQfntwDo');
+
+var ar = new al.AlWebInsight()
+    , mongoose = require("mongoose");
+mongoose.connect('mongodb://wies:wies@alex.mongohq.com:10048/wies');
+var Schema = mongoose.Schema
     , ObjectId = Schema.ObjectID;
 
 exports.index = function(req, res){
@@ -18,12 +20,54 @@ exports.index = function(req, res){
 };
 
 exports.al = function(req, res) {
-    
-    ar.get({'url': req.body.url, 'date_created': req.body.date_created, "time_created": req.body.time_created}, function(response) {
-        console.log(response.title);
-        console.log(response.description);
+    // console.log("url:" + req.body.url + "date_created: " + req.body.date_created);
+    ar.get({'url': req.body.url, 'date_created': req.body.date_created, 'time_created': req.body.time_created}, function(response) {
+        console.log(response.body.results.head_data.meta_data.title);
+        console.log(response.body.results.head_data.meta_data.description);
+        var siteSchema = new Schema({
+            url: {
+                type: String,
+                index: { unique: true },
+                required: true
+            },
+            title: String,
+            description: String,
+            keywords: [{
+                text: String,
+                relevance: String
+            }]
+        });
+        var Site = mongoose.model('Site', siteSchema);
+
+        Site.findOne({"url": req.body.url}).exec(function(err, s) {
+            s.title = response.body.results.head_data.meta_data.title;
+            s.description = response.body.results.head_data.meta_data.description;
+            s.save(function(err) {
+                if (err) {console.log(err);}
+            });
+        });
     });
 
+}
+
+exports.show = function(req, res) {
+    var siteSchema = new Schema({
+        url: {
+            type: String,
+            index: { unique: true },
+            required: true
+        },
+        title: String,
+        description: String,
+        keywords: [{
+            text: String,
+            relevance: String
+        }]
+    });
+    var Site = mongoose.model('Site', siteSchema);
+    Site.find().sort('_id').exec(function(err, sites) {
+        res.render("results", {title: "Results", Sites: sites});
+    });
 }
 
 exports.start = function(req, res) {
@@ -51,8 +95,10 @@ exports.start = function(req, res) {
         if (err) console.log("Error connecting to Beanstalk");
 
         for (i = 0; i < sites.length; i++) {
-            job = {type: "url", payload: sites[i]}
-            jobs.push(job);
+            if (sites[i].length > 8) {
+                job = {type: "url", payload: sites[i]}
+                jobs.push(job);
+            }
         }
         client.use("url", function(err, tname){
             client.put(0,i*1,60, JSON.stringify(jobs.shift()), continuer);
@@ -61,6 +107,4 @@ exports.start = function(req, res) {
     });
     res.send("Processing Sites");
 }
-
-
 

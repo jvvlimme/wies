@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    .container
+        .span12
+            h1 Results
+            table.table.table-striped
+                thead
+                    tr
+                        th.span3 URL
+                        th.span3 Description
+                        th.span3 Keywords
+                        th.span3 Thumbnail
+                tbody
+                    each site in Sites
+                        tr
+                            td
+                                a("href"="#{site.url}") #{site.title}
+                                br
+                                small #{site.url}
+                            td= site.description
+                            td
+                                ul
+                                    each keyword in site.keywords
+                                        li #{keyword.text} (#{keyword.relevance})
+                            td
+                                img("src"="http://img.bitpixels.com/getthumbnail?code=89260&size=200&url=#{site.url}")
+
+
+
