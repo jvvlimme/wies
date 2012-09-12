@@ -18,9 +18,8 @@ exports.index = function(req, res){
 };
 
 exports.al = function(req, res) {
-    console.log("ok");
-	console.log(req.param['url']);
-    ar.get({'url': req.param["url"], 'date_created': req.param["date_created"], "time_created": req.param["time_created"]}, function(response) {
+    
+    ar.get({'url': req.body.url, 'date_created': req.body.date_created, "time_created": req.body.time_created}, function(response) {
         console.log(response.title);
         console.log(response.description);
     });
