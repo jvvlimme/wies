@@ -1,13 +1,22 @@
-var fivebeans = require('fivebeans');
-var client = new fivebeans.client('0.0.0.0', 11300);
-client.connect(function(err)
-{
-    	if (err) {console.log ("error") } else { 
-	client.use("test");
-	client.put(0,0,0, "test",function(err, jobid) {
-		console.log(jobid);
-	}); 
-	 
-	}
-});
+var http = require('http');
+var $ = require('jquery'); 
+var options = {
+    host: 'www.standaard.be',
+    port: 80,
+    path: '/',
+    method: 'GET'
+  };
 
+  var req = http.get(options, function(res) {
+    var pageData = "";
+    res.setEncoding('utf8');
+    res.on('data', function (chunk) {
+      pageData += chunk;
+    });
+
+    res.on('end', function(){
+       var pd = $(pageData);
+	console.log(pd.find('title').text());
+	console.log(pd.find('meta[name="description"]').attr("content"));
+    });
+  });
