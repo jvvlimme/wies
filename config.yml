@@ -3,6 +3,8 @@ beanstalkd:
     port: 11300
 watch:
     - 'url'
+    - 'crawl'
 handlers:
     - "handler.js"
+    - "crawler.js"
 ignoreDefault: true
