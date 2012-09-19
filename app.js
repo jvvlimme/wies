@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , http = require('http')
+  , httpProxy = require('http-proxy')
   , path = require('path');
 
 var app = express();
@@ -30,6 +31,10 @@ app.get('/', routes.index);
 app.post('/', routes.start);
 app.post('/al', routes.al);
 app.get('/results', routes.show);
+
+httpProxy.createServer(app.get('port'), 'localhost').listen(80);
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+

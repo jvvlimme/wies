@@ -5,6 +5,7 @@
 var job
     , jobs=[]
     , jobs2=[]
+    , jobs3=[]
     , delay=0;
 
 var al = require('al-papi');
@@ -40,7 +41,7 @@ exports.index = function(req, res){
 exports.show = function(req, res) {
     var Site = mongoose.model('Site', siteSchema);
     Site.find().sort('_id').exec(function(err, sites) {
-        res.render("results", {title: "Results", Sites: sites});
+        res.render('results', {title: 'Results', Sites: sites});
     });
 }
 
@@ -48,29 +49,37 @@ exports.start = function(req, res) {
     if (typeof req.param('sitelist') != "string") { res.send("Error Processing Input"); process.exit(0)}
     var sites = req.param('sitelist').split(/\r\n|\r|\n/);
 
+    var doneEmittingJobs = function()
+    {
+        console.log('We reached our completion callback. Now closing down.');
+    };
+
+    var continuer = function(err, jobid)
+    {
+        console.log('emitted job id: ' + jobid);
+        if (jobs.length === 0)
+            return doneEmittingJobs();
+        delay++;
+        client.put(0, delay, 0, JSON.stringify(jobs.shift()), continuer);
+    };
+    var continuer2 = function(err, jobid)
+    {
+        console.log('emitted job id: ' + jobid);
+        if (jobs2.length === 0)
+            return doneEmittingJobs();
+        delay++;
+        client.put(0, delay, 0, JSON.stringify(jobs2.shift()), continuer2);
+    };
+    var continuer3 = function(err, jobid)
+    {
+        console.log('emitted job id: ' + jobid);
+        if (jobs3.length === 0)
+            return doneEmittingJobs();
+        delay++;
+        client.put(0, delay, 0, JSON.stringify(jobs3.shift()), continuer3);
+    };
+
     client.connect(function(err) {
-
-        var doneEmittingJobs = function()
-        {
-            console.log('We reached our completion callback. Now closing down.');
-        };
-
-        var continuer = function(err, jobid)
-        {
-            console.log('emitted job id: ' + jobid);
-            if (jobs.length === 0)
-                return doneEmittingJobs();
-            delay++;
-            client.put(0, delay, 0, JSON.stringify(jobs.shift()), continuer);
-        };
-        var continuer2 = function(err, jobid)
-        {
-            console.log('emitted job id: ' + jobid);
-            if (jobs2.length === 0)
-                return doneEmittingJobs();
-            delay++;
-            client.put(0, delay, 0, JSON.stringify(jobs2.shift()), continuer2);
-        };
 
         if (err) console.log("Error connecting to Beanstalk");
 
@@ -79,21 +88,25 @@ exports.start = function(req, res) {
                 var Site = mongoose.model('Site', siteSchema);
                 var s = new Site();
                 s.url = sites[i];
-                console.log(sites[i]);
                 s.save();
-                console.log(s._id);
 
                 if (sites[i].length > 8) {
                     job = {type: "url", payload: {url: sites[i], id: s._id}}
                     job2 = {type: "crawl", payload: {url: sites[i], id:s._id}}
+                    job3 = {type: "screenshot", payload: {url: sites[i], id:s._id}}
                     jobs.push(job);
                     jobs2.push(job2);
+                    jobs3.push(job3);
                 }
             }
         }
         client.use("url", function(err, tname){
             client.put(0,i*1,0, JSON.stringify(jobs.shift()), continuer);
-            client.put(0,i*1,0, JSON.stringify(jobs2.shift()), continuer2);
+            client.put(0, i*1,0, JSON.stringify(jobs2.shift()), continuer2);
+        });
+
+        client.use("screenshot", function(err, tname) {
+            client.put(0, i*1,0, JSON.stringify(jobs3.shift()), continuer3);
         });
 
     });
